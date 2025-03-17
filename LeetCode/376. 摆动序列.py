@@ -4,7 +4,7 @@ class Solution(object):
         """
         :type nums: List[int]
         :rtype: int
-        """        
+        """
         res = 1 # 默认最右侧有一个峰值
         preDiff = 0 # nums[i] - nums[i-1]
         curDiff = 0 # nums[i+1] - nums[i]
@@ -28,16 +28,16 @@ class Solution(object):
         if n < 2:
             return n
         # 选择一个元素作为摆动序列的一部分时，这个元素要么是上升的，要么是下降的，这取决于前一个元素的大小
-        up = [1] + [0] * (n - 1) # 以前 i 个元素中的某一个为结尾的最长的「上升摆动序列」的长度
-        down = [1] + [0] * (n - 1) # 以前 i 个元素中的某一个为结尾的最长的「下降摆动序列」的长度
+        up = [1] + [0] * (n - 1) # 前 i 个元素中的某一个为结尾的最长的「上升摆动序列」的长度
+        down = [1] + [0] * (n - 1) # 前 i 个元素中的某一个为结尾的最长的「下降摆动序列」的长度
         for i in range(1, n):
             if nums[i] > nums[i - 1]:
-                up[i] = max(up[i - 1], down[i - 1] + 1)
-                down[i] = down[i - 1]
+                up[i] = max(up[i - 1], down[i - 1] + 1) # 要么不考虑第i个数 要么https://leetcode.cn/problems/wiggle-subsequence/solutions/518296/bai-dong-xu-lie-by-leetcode-solution-yh2m/comments/873759/
+                down[i] = down[i - 1] # 当前数大于前一个数 无法再下降
             elif nums[i] < nums[i - 1]:
-                up[i] = up[i - 1]
-                down[i] = max(up[i - 1] + 1, down[i - 1])
-            else:
+                up[i] = up[i - 1] # 当前数小于前一个数 无法再上升
+                down[i] = max(up[i - 1] + 1, down[i - 1]) #
+            else: # 相等 没有带来新信息
                 up[i] = up[i - 1]
                 down[i] = down[i - 1]
         
