@@ -18,6 +18,7 @@ class Solution(object):
     ### 矩阵快速幂解法 时间复杂度O(logn)
     # https://leetcode.cn/problems/climbing-stairs/solutions/2560726/python3javacgotypescript-yi-ti-shuang-ji-27yo/
     # https://mp.weixin.qq.com/s/cv9Gd8NmEhXVrSiWeCvuWA
+    # https://oi-wiki.org/math/binary-exponentiation/#__tabbed_1_2
     def climbStairs(self, n: int) -> int:
         res = np.array([(1, 1)]) # [1, 1]为初始状态
         factor = np.array([(1, 1), (1, 0)]) # 2*2矩阵，快速幂的底数
