@@ -1,39 +1,34 @@
-class Solution(object):
-    ### 滑动窗口
-    def findAnagrams(self, s, p):
-        """
-        :type s: str
-        :type p: str
-        :rtype: List[int]
-        """
-        d_p = {}
-        d_s = {}
-        for i in range(97, 123):
-            d_p[chr(i)] = d_s[chr(i)] = 0
+class Solution:
+    def judge(self, s_l, p_l):
+        for i in range(26):
+            if s_l[i] > p_l[i]:
+                return True
+        return False
+
+    ### 滑动窗口法
+    def findAnagrams(self, s: str, p: str):
+        s_list = [0]*26
+        p_list = [0]*26
+        res = []
 
         for w in p:
-            d_p[w] += 1
-        for w in s[:len(p)]:
-            d_s[w] += 1
+            p_list[ord(w)-ord('a')] += 1
+        
+        left = right = 0
 
-        ans = []
-        left = 0
-        right = len(p)-1
-
-        while right<len(s):
-            if d_s == d_p:
-                ans.append(left)
-
-            if right == len(s)-1:
-                break
-
-            d_s[s[left]] -= 1
-            left += 1
-
+        while right < len(s):
+            s_list[ord(s[right])-ord('a')] += 1
             right += 1
-            d_s[s[right]] += 1
 
-        return ans
+            # 收缩窗口
+            while self.judge(s_list, p_list):
+                s_list[ord(s[left])-ord('a')] -= 1
+                left += 1
+            
+            if s_list == p_list:
+                res.append(left)
+
+        return res
 
 
     ### 一般解法 - 超时
